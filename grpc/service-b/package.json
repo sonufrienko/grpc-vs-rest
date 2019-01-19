@@ -1,0 +1,17 @@
+{
+  "name": "service-b",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Sergey Onufrienko",
+  "license": "MIT",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.4.0",
+    "express": "^4.16.4",
+    "grpc": "^1.18.0"
+  }
+}
