@@ -1,0 +1,16 @@
+{
+  "name": "service-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Sergey Onufrienko",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  }
+}
