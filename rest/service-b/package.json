@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "NODE_ENV=production PORT=3001 node server.js"
   },
   "keywords": [],
   "author": "Sergey Onufrienko",

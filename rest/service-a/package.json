@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "NODE_ENV=production PORT=3000 REQUEST_COUNT=1000000 SERVICE_B_BASE_URL='http://<ip>:3001' node server.js"
   },
   "keywords": [],
   "author": "Sergey Onufrienko",
