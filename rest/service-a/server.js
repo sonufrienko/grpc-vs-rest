@@ -1,32 +1,34 @@
 const request = require("request");
-const express = require("express");
 const http = require("http");
 
 http.globalAgent.keepAlive = true;
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const REQUEST_COUNT = process.env.REQUEST_COUNT;
 const SERVICE_B_BASE_URL =
   process.env.SERVICE_B_BASE_URL || "http://localhost:3001";
 
-app.get("/empty", (req, res, next) => {
-  request(`${SERVICE_B_BASE_URL}/empty`, (error, response, body) => {
-    res.end();
+const requestAsync = endpoint =>
+  new Promise((resolve, reject) => {
+    request(`${SERVICE_B_BASE_URL}${endpoint}`, (err, res, body) =>
+      err ? reject(err) : resolve(body)
+    );
   });
-});
 
-app.get("/books", (req, res, next) => {
-  request(`${SERVICE_B_BASE_URL}/books`, (error, response, body) => {
-    res.send(body);
-  });
-});
+const benchmark = async endpoint => {
+  const startTime = process.hrtime();
+  for (let i = 1; i <= REQUEST_COUNT; i++) {
+    await requestAsync(endpoint);
+  }
+  const endTime = process.hrtime(startTime);
+  console.log(
+    `Done ${REQUEST_COUNT.toLocaleString()} ${endpoint} in ${endTime[0]} s ${(
+      endTime[1] / 1e6
+    ).toFixed(4)} ms`
+  );
+};
 
-app.get("/books/1", (req, res, next) => {
-  request(`${SERVICE_B_BASE_URL}/books/1`, (error, response, body) => {
-    res.send(body);
-  });
-});
-
-app.listen(PORT, () => {
-  console.info(`Service A running at port ${PORT}`);
-});
+(async () => {
+  await benchmark("/empty");
+  await benchmark("/books/1");
+  await benchmark("/books");
+})();
